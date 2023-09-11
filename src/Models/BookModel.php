@@ -16,7 +16,22 @@ class BookModel
 
   public function getAllBooks(): array | false
   {
-    $query = $this->db->prepare("SELECT * FROM `Books`
+    $query = $this->db->prepare("SELECT 
+    `Books`.`id`, 
+    `Books`.`title`, 
+    `Books`.`author`, 
+    `Books`.`isbn`, 
+    `Books`.`pub_year`, 
+    `Books`.`cover_img_url`, 
+    `Books`.`summary`, 
+    `Books`.`lang`, 
+    `Books`.`gr_url`, 
+    `Books`.`notes`, 
+    `Books`.`deleted`,
+    `Authors`.`author_name`,
+    `Authors`.`wiki_link`,
+    `Languages`.`lang_name`
+    FROM `Books`
     INNER JOIN `Authors` ON `Books`.`author`=`Authors`.`id`
     INNER JOIN `Languages` ON `Books`.`lang`=`Languages`.`id`;");
 

@@ -6,7 +6,7 @@ readonly class Book
 {
   public int $id;
   public string $title;
-  public string $author;
+  public string $author_name;
   public string $wiki_link;
   public string $isbn;
   public int $pub_year;
@@ -20,7 +20,7 @@ readonly class Book
   public function __construct(
     int $id,
     string $title,
-    string $author,
+    string $author_name,
     string $wiki_link,
     string $isbn,
     int $pub_year,
@@ -33,7 +33,7 @@ readonly class Book
   ) {
     $this->id = $id;
     $this->title = $title;
-    $this->author = $author;
+    $this->author_name = $author_name;
     $this->wiki_link = $wiki_link;
     $this->isbn = $isbn;
     $this->pub_year = $pub_year;

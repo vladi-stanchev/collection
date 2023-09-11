@@ -5,6 +5,7 @@ use Collection\Models\BookModel;
 $db = new PDO('mysql:host=db; dbname=collection', 'root', 'password');
 $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
+require_once 'src/DisplayAllBooks.php';
 require_once 'vendor/autoload.php';
 ?>
 
@@ -35,19 +36,8 @@ require_once 'vendor/autoload.php';
     <?php
     $bookModel = new BookModel($db);
     $books = $bookModel->getAllBooks();
+    echo displayAllBooks($books);
 
-    foreach ($books as $book) {
-        echo "
-        <h3>$book->title</h3>
-        <a href='$book->wiki_link' class='author'>$book->author</a> <br><br>
-        <img src='$book->cover_img_url' alt='$book->title cover' class='book-cover' >
-        <p>$book->summary</p>
-        <p><span class='bold'>Published: </span>$book->pub_year</p>
-        <p><span class='bold'>ISBN: </span><a href='$book->gr_url'>$book->isbn</a></p>
-        <p><span class='bold'>Language: </span>$book->lang_name</p>
-        <hr>        
-        ";
-    }
     ?>
 </body>
 
