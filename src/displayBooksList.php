@@ -1,5 +1,5 @@
 <?php
-function displayAllBooks(array $books): string
+function displayBooksList(array $books): string
 {
   $output = '';
 
