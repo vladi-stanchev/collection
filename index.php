@@ -36,12 +36,11 @@ require_once 'vendor/autoload.php';
     <?php
     $bookModel = new BookModel($db);
     $books = $bookModel->getAllBooks();
-    $booksList =  display_books_list($books);
 
-    if ($booksList) {
-        echo $booksList;
-    } else {
-        echo 'No results found.';
+    try {
+        echo display_books_list($books);
+    } catch (Exception $e) {
+        echo $e->getMessage();
     }
 
     ?>

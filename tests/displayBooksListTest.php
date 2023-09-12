@@ -48,9 +48,7 @@ class displayBooksListTest extends TestCase
 
   public function test_empty_array()
   {
-    $input = [];
-    $this->expectExceptionMessage("No results found.");
-
-    display_books_list($input);
+    $this->expectExceptionMessage("No books found.");
+    display_books_list([]);
   }
 }

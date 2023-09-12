@@ -4,9 +4,8 @@ function display_books_list(array $books): string
   $output = '';
 
   if (!$books) {
-    throw new Error("No results found.");
+    throw new Exception("No books found.");
   }
-
 
   foreach ($books as $book) {
     $output .= "
@@ -20,7 +19,6 @@ function display_books_list(array $books): string
         <hr>
         ";
   }
-
 
   return  $output;
 }
