@@ -1,14 +1,14 @@
 <?php
 function display_books_list(array $books): string
 {
-  $output = '';
+    $output = '';
 
-  if (!$books) {
-    throw new Exception("No books found.");
-  }
+    if (!$books) {
+        throw new Exception("No books found.");
+    }
 
-  foreach ($books as $book) {
-    $output .= "
+    foreach ($books as $book) {
+        $output .= "
         <h3>$book->title</h3>
         <a href='$book->wiki_link' class='author'>$book->author_name</a> <br><br>
         <img src='$book->cover_img_url' alt='$book->title cover' class='book-cover'>
@@ -18,7 +18,7 @@ function display_books_list(array $books): string
         <p><span class='bold'>Language: </span>$book->lang_name</p>
         <hr>
         ";
-  }
+    }
 
-  return  $output;
+    return  $output;
 }
