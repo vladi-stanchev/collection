@@ -1,5 +1,29 @@
 *,
 *::before,
 *::after {
-  box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body {
+    width: 800px;
+    margin: 0 auto;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 200;
+}
+
+.book-cover {
+    max-width: 200px;
+    border-radius: 7px;
+}
+
+a {
+    color: cadetblue;
+}
+
+a.author {
+    text-decoration: none;
+}
+
+.bold {
+    font-weight: 400;
 }
