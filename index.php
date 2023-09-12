@@ -5,7 +5,7 @@ use Collection\Models\BookModel;
 $db = new PDO('mysql:host=db; dbname=collection', 'root', 'password');
 $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
-require_once 'src/displayBooksList.php';
+require_once 'src/display_books_list.php';
 require_once 'vendor/autoload.php';
 ?>
 
@@ -36,7 +36,14 @@ require_once 'vendor/autoload.php';
     <?php
     $bookModel = new BookModel($db);
     $books = $bookModel->getAllBooks();
-    echo displayBooksList($books);
+    $booksList =  display_books_list($books);
+
+    if ($booksList) {
+        echo $booksList;
+    } else {
+        echo 'No results found.';
+    }
+
     ?>
 </body>
 
