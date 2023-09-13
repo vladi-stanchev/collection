@@ -2,12 +2,10 @@
 
 use Collection\Models\BookModel;
 
+require_once './db_connect.php';
 require_once 'src/display_books_list.php';
 require_once 'src/display_genres_checkbox.php';
 require_once 'vendor/autoload.php';
-
-$db = new PDO('mysql:host=db; dbname=collection', 'root', 'password');
-$db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
 $form_submitted = false;
 
