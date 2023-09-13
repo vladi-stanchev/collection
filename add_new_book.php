@@ -3,6 +3,7 @@
 use Collection\Models\BookModel;
 
 require_once 'src/display_books_list.php';
+require_once 'src/display_genres_checkbox.php';
 require_once 'vendor/autoload.php';
 
 $db = new PDO('mysql:host=db; dbname=collection', 'root', 'password');
@@ -112,18 +113,11 @@ if (isset($_POST['title']) && isset($_POST['author']) && isset($_POST['isbn'])) 
 
                 </select>
                 <br><br>
-                <label>Genres</label><br>
-                <div class="checkbox-options-container flex-center">
 
-                    <?php
-                    $genres = $bookModel->getAllGenres();
-
-                    foreach ($genres as $genre) {
-                        echo ("  <input type='checkbox' id='$genre[genre_name]' name='genres[$genre[id]]' value=$genre[id]>
-    <label for='$genre[genre_name]' class='checkbox-button' tabindex='0'>$genre[genre_name]</label><br>");
-                    }
-                    ?>
-                </div>
+                <?php
+                $allGenres = $bookModel->getAllGenres();
+                echo display_genres_checkbox($allGenres);
+                ?>
                 <br><br>
                 <label for="cover_img_url">Cover Image URL</label>
                 <input type="url" id="cover_img_url" name="cover_img_url"><br><br>
