@@ -4,7 +4,7 @@ use Collection\Entities\Book;
 
 use PHPUnit\Framework\TestCase;
 
-require_once './src/display_books_list.php';
+require_once './src/Views/display_books_list.php';
 require_once './Utilities/utils.php';
 require_once './vendor/autoload.php';
 

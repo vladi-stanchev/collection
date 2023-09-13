@@ -66,25 +66,7 @@ class BookModel
         return $books;
     }
 
-    public function getAllGenres()
-    {
-        $query = $this->db->prepare("SELECT
-        `Genres`.`id`,
-        `Genres`.`genre_name`
-        FROM `Genres`
-        ");
 
-        $query->execute();
-
-        $genres = $query->fetchAll();
-
-        // Sort $genres array by genre_name alphabetically
-        usort($genres, function ($a, $b) {
-            return strcmp($a['genre_name'], $b['genre_name']);
-        });
-
-        return $genres;
-    }
 
     public function getAllLanguages(): array
     {

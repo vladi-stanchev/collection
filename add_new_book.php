@@ -1,15 +1,17 @@
 <?php
 
 use Collection\Models\BookModel;
+use Collection\Models\GenreModel;
 
 require_once './db_connect.php';
-require_once 'src/display_books_list.php';
-require_once 'src/display_genres_checkbox.php';
+// require_once 'src/Views/display_books_list.php';
+require_once 'src/Views/display_genres_checkbox.php';
 require_once 'vendor/autoload.php';
 
 $form_submitted = false;
 
 $bookModel = new BookModel($db);
+$genreModel = new GenreModel($db);
 
 if (isset($_POST['title']) && isset($_POST['author']) && isset($_POST['isbn'])) {
 
@@ -113,7 +115,7 @@ if (isset($_POST['title']) && isset($_POST['author']) && isset($_POST['isbn'])) 
                 <br><br>
 
                 <?php
-                $allGenres = $bookModel->getAllGenres();
+                $allGenres = $genreModel->getAllGenres();
                 echo display_genres_checkbox($allGenres);
                 ?>
                 <br><br>

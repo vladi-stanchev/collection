@@ -4,7 +4,7 @@ use Collection\Models\BookModel;
 
 require_once './db_connect.php';
 
-require_once 'src/display_books_list.php';
+require_once 'src/Views/display_books_list.php';
 require_once 'vendor/autoload.php';
 ?>
 
