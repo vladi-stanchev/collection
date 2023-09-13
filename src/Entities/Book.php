@@ -14,7 +14,6 @@ readonly class Book
     public string $summary;
     public string $lang_name;
     public string $gr_url;
-    public string $notes;
     public int $deleted;
 
     public function __construct(
@@ -28,7 +27,6 @@ readonly class Book
         string $summary,
         string $lang_name,
         string $gr_url,
-        string $notes,
         int $deleted
     ) {
         $this->id = $id;
@@ -41,7 +39,6 @@ readonly class Book
         $this->summary = $summary;
         $this->lang_name = $lang_name;
         $this->gr_url = $gr_url;
-        $this->notes = $notes;
         $this->deleted = $deleted;
     }
 }
