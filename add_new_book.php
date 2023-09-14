@@ -4,40 +4,48 @@ use Collection\Models\BookModel;
 use Collection\Models\GenreModel;
 
 require_once './db_connect.php';
-// require_once 'src/Views/display_books_list.php';
+require_once './Utilities/utils.php';
 require_once 'src/Views/display_genres_checkbox.php';
 require_once 'vendor/autoload.php';
 
 $form_submitted = false;
+$form_valid = false;
 
 $bookModel = new BookModel($db);
 $genreModel = new GenreModel($db);
 
-if (isset($_POST['title']) && isset($_POST['author']) && isset($_POST['isbn'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $title = $_POST["title"];
-    $author = $_POST["author"];
-    $isbn = $_POST["isbn"];
+    $title = $_POST["title"] ?? null;
+    $author = $_POST["author"] ?? null;
+    $isbn = $_POST["isbn"] ?? null;
 
     // Optional params 
-    // Convert $pub_year to an integer or set it to null if not provided
-    $pub_year = isset($_POST["pub_year"]) ? (int)$_POST["pub_year"] : null;
+    $pub_year = $_POST["pub_year"] ?? null;
     $cover_img_url = $_POST["cover_img_url"] ?? null;
     $summary = $_POST["summary"] ?? null;
     $lang = $_POST["lang"] ?? null;
     $gr_url = $_POST["gr_url"] ?? null;
     $genres = $_POST["genres"] ?? null;
 
-    try {
-        $bookAddedOK = $bookModel->addNewBook($title, $author, $isbn, $pub_year, $cover_img_url, $summary, $lang, $gr_url, $genres);
-        if ($bookAddedOK) {
-            $form_submitted = true;
-            header("refresh:5;url=index.php");
+    // Validate form 
+    $form_errors = validation_add_new_book_form($title, $author, $isbn, $pub_year, $cover_img_url, $lang, $gr_url);
+
+    // If no errors:
+    if (!$form_errors) {
+        try {
+            // Add book to db
+            $bookAddedOK = $bookModel->addNewBook($title, $author, $isbn, $pub_year, $cover_img_url, $summary, $lang, $gr_url, $genres);
+            if ($bookAddedOK) {
+                $form_submitted = true;
+                header("refresh:5;url=index.php");
+            }
+        } catch (Exception $e) {
+            echo $e->getMessage();
         }
-    } catch (Exception $e) {
-        echo $e->getMessage();
     }
 }
+
 
 ?>
 <!DOCTYPE html>
@@ -65,41 +73,49 @@ if (isset($_POST['title']) && isset($_POST['author']) && isset($_POST['isbn'])) 
 <body>
     <?php if (!$form_submitted) : ?>
         <h1>Add a New Book</h1>
-        <form method="post" action="add_new_book.php" class="add-book-form">
+        <form method="post" action="add_new_book.php" class="add-book-form fade-in">
 
             <div class="left">
-                <label for="title">Book Title</label>
-                <input type="text" id="title" name="title" required><br><br>
+                <label for="title">Book Title<span class='red-star'>*</span></label>
+                <input type="text" id="title" name="title" value="<?php echo $_POST["title"] ?? ''; ?>">
+                <span class="error"><?php echo isset($form_errors['title']) ? $form_errors['title'] : ''; ?></span>
+                <br><br>
 
-                <label for="author">Author</label>
-                <select name="author" id="author" required>
-                    <option value="" selected disabled hidden>Select an Option</option>
+                <label for="author">Author<span class='red-star'>*</span></label>
+                <select name="author" id="author">
+                    <option value="start" selected disabled hidden>Select an Option</option>
 
                     <?php
                     $authors = $bookModel->getAllAuthors();
 
                     foreach ($authors as $author) {
-                        echo ("<option value=$author[id]>$author[author_name]</option>");
+                        // Check if $_POST selection and input
+                        $selected = (isset($_POST['author']) && $_POST['author'] == $author['id']) ? 'selected' : '';
+                        echo "<option value='{$author['id']}' $selected>{$author['author_name']}</option>";
                     }
                     ?>
-
                 </select>
+                <span class="error"><?php echo isset($form_errors['author']) ? $form_errors['author'] : ''; ?></span>
+
                 <br><br>
 
-                <label for="isbn">ISBN</label>
-                <input type="text" id="isbn" name="isbn" maxlength="13"><br><br>
+                <label for="isbn">ISBN<span class='red-star'>*</span></label>
+                <input type="text" id="isbn" name="isbn" maxlength="13" value="<?php echo $_POST["isbn"] ?? ''; ?>">
+                <span class="error"><?php echo isset($form_errors['isbn']) ? $form_errors['isbn'] : ''; ?></span>
+                <br><br>
 
                 <label for="summary">Summary</label>
-                <textarea id="summary" name="summary" rows="13" cols="50" required></textarea><br><br>
+                <textarea id="summary" name="summary" rows="13" cols="50"><?php echo $_POST["summary"] ?? ''; ?></textarea><br><br>
             </div>
+
+
             <div class="right">
-
                 <label for="pub_year">Publication Year</label>
-                <input type="number" id="pub_year" name="pub_year" min="1000" max="<?php echo date('Y') ?>"><br><br>
+                <input type="text" id="pub_year" name="pub_year" maxlength="4" value="<?php echo $_POST["pub_year"] ?? ''; ?>">
+                <span class="error"><?php echo isset($form_errors['pub_year']) ? $form_errors['pub_year'] : ''; ?></span>
 
+                <br><br>
                 <label for="lang">Language</label>
-
-
                 <select name="lang" id="lang">
                     <option value="" selected disabled hidden>Select an Option</option>
 
@@ -107,7 +123,8 @@ if (isset($_POST['title']) && isset($_POST['author']) && isset($_POST['isbn'])) 
                     $languages = $bookModel->getAllLanguages();
 
                     foreach ($languages as $lang) {
-                        echo ("<option value=$lang[id]>$lang[lang_name]</option>");
+                        $selected = (isset($_POST['lang']) && $_POST['lang'] == $lang['id']) ? 'selected' : '';
+                        echo ("<option value=$lang[id] $selected>$lang[lang_name]</option>");
                     }
                     ?>
 
@@ -120,10 +137,15 @@ if (isset($_POST['title']) && isset($_POST['author']) && isset($_POST['isbn'])) 
                 ?>
                 <br><br>
                 <label for="cover_img_url">Cover Image URL</label>
-                <input type="url" id="cover_img_url" name="cover_img_url"><br><br>
+                <input type="text" id="cover_img_url" name="cover_img_url" value="<?php echo $_POST["cover_img_url"] ?? ''; ?>">
+                <span class="error"><?php echo isset($form_errors['cover_img_url']) ? $form_errors['cover_img_url'] : ''; ?></span>
+
+                <br><br>
 
                 <label for="gr_url">Goodreads URL</label>
-                <input type="url" id="gr_url" name="gr_url"><br><br>
+                <input type="text" id="gr_url" name="gr_url" value="<?php echo $_POST["gr_url"] ?? ''; ?>">
+                <span class="error"><?php echo isset($form_errors['gr_url']) ? $form_errors['gr_url'] : ''; ?></span>
+                <br><br>
 
                 <input type="submit" name="submit" value="Submit">
             </div>

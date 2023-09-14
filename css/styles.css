@@ -114,10 +114,11 @@ input[type='checkbox'] {
     text-align: center;
     border-radius: 10px;
     transition: all 0.2s;
+    font-weight: 200;
 }
 
 /* Style the label text inside the button */
-.checkbox-button label {
+label .checkbox-button {
     margin-left: 5px;
     cursor: pointer;
 }
@@ -146,4 +147,30 @@ input[type='checkbox']:checked + label {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+}
+
+.error,
+.red-star {
+    color: rgb(193, 76, 76);
+    font-size: smaller;
+    margin: 0;
+    padding: 0;
+    line-height: 0.2;
+    font-weight: 400;
+    height: 20px;
+}
+
+/* ANIMATIONS */
+.fade-in {
+    opacity: 0;
+    animation: fadeIn 0.5s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }
