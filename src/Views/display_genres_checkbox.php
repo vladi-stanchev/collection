@@ -1,4 +1,6 @@
 <?php
+// DISPLAY HTML CHECKBOX OPTIONS FOR NEW BOOK FORM
+
 function display_genres_checkbox(array $genres): string
 {
     $output = "<label>Genres</label><br>

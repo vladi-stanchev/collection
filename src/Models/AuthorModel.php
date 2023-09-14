@@ -23,7 +23,6 @@ class AuthorModel
         ");
 
         $query->execute();
-
         $authorsArray = $query->fetchAll();
 
         // Sort alphabetically

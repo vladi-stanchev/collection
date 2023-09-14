@@ -1,5 +1,6 @@
 <?php
 
+use Collection\Entities\Book;
 use Collection\Models\AuthorModel;
 use Collection\Models\BookModel;
 use Collection\Models\GenreModel;
@@ -25,33 +26,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title = $_POST["title"] ?? null;
     $author = $_POST["author"] ?? null;
     $isbn = $_POST["isbn"] ?? null;
-
     // Optional params 
-    $pub_year = $_POST["pub_year"] ?? null;
+    $pub_year = intval($_POST["pub_year"]) ?? null;
     $cover_img_url = $_POST["cover_img_url"] ?? null;
     $summary = $_POST["summary"] ?? null;
     $lang = $_POST["lang"] ?? null;
     $gr_url = $_POST["gr_url"] ?? null;
     $genres = $_POST["genres"] ?? null;
 
-    // Validate form 
+    // Validate form                                                    VALIDATE GENRES HERE!!
     $form_errors = validation_add_new_book_form($title, $author, $isbn, $pub_year, $cover_img_url, $lang, $gr_url);
 
     // If no errors:
     if (!$form_errors) {
         try {
+
+            // CREATE NEW BOOK OBJECT TO INSERT IN DB
+            $newBook = new Book(
+                title: $title,
+                author_id: $author,
+                isbn: $isbn,
+                pub_year: $pub_year,
+                cover_img_url: $cover_img_url,
+                summary: $summary,
+                lang_id: $lang,
+                gr_url: $gr_url,
+                genres_array: $genres
+            );
+
             // Add book to db
-            $bookAddedOK = $bookModel->addNewBook($title, $author, $isbn, $pub_year, $cover_img_url, $summary, $lang, $gr_url, $genres);
+            $bookAddedOK = $bookModel->addNewBook($newBook);
             if ($bookAddedOK) {
                 $form_submitted = true;
-                header("refresh:5;url=index.php");
+                header("refresh:3.14;url=index.php");
             }
         } catch (Exception $e) {
             echo $e->getMessage();
         }
     }
 }
-
 
 ?>
 <!DOCTYPE html>
@@ -146,7 +159,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php else : ?>
         <!-- Display a success message and hide the form -->
         <div class="success-message flex-center">
-            <p><?php echo $title; ?> added successfully!<br>You'll be sent back to your Library in 5 seconds.</p>
+            <p><span class='bold'><?php echo $title; ?></span> added successfully.<br>You'll be sent back to your Library in 3.14 seconds.</p>
             <a href='add_new_book.php'>Add a new one</a>
         </div>
     <?php endif; ?>

@@ -1,4 +1,6 @@
 <?php
+// DISPLAY DROPDOWN SELECT HTML ELEMENTS WITH LANGUAGES 
+
 function display_languages_select(array $languages): string
 {
     $output = "<label for='lang'>Language</label>

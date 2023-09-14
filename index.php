@@ -32,17 +32,19 @@ require_once 'vendor/autoload.php';
 
 <body>
     <h1>My Library</h1>
-    <?php
-    $bookModel = new BookModel($db);
-    $books = $bookModel->getAllBooks();
+    <div class="collection-display">
+        <?php
+        $bookModel = new BookModel($db);
+        $books = $bookModel->getAllBooks();
 
-    try {
-        echo display_books_list($books);
-    } catch (Exception $e) {
-        echo $e->getMessage();
-    }
+        try {
+            echo display_books_list($books);
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
 
-    ?>
+        ?>
+    </div>
 </body>
 
 </html>

@@ -1,4 +1,6 @@
 <?php
+// DISPLAYS A DROPDOWN SELECT ELEMENT WITH ALL AUTHORS
+
 function display_authors_select(array $authors): string
 {
     $output = "<label for='author'>Author<span class='red-star'>*</span></label>
@@ -10,7 +12,7 @@ function display_authors_select(array $authors): string
     }
 
     foreach ($authors as $author) {
-        // Check if $_POST selection and input
+        // Check if $_POST has values and apply
         $selected = (isset($_POST['author']) && $_POST['author'] == $author['id']) ? 'selected' : '';
         $output .= "<option value='{$author['id']}' $selected>{$author['author_name']}</option>";
     }

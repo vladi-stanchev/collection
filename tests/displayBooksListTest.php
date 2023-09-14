@@ -26,15 +26,16 @@ class displayBooksListTest extends TestCase
         $book = [new Book(
             1,
             'Title',
+            1,
             'AuthorName',
             'https://wikipedia.org',
             1234567890123,
-            1900,
-            'https://wikipedia.org',
             'Summary',
+            1900,
+            1,
             'Spanish',
             'https://wikipedia.org',
-            'notes',
+            'https://wikipedia.org',
             0
         )];
 
@@ -47,10 +48,79 @@ class displayBooksListTest extends TestCase
         $this->assertEquals($expectedOutput, $actualOutput);
     }
 
-    public function test_empty_array()
+
+
+
+    public function testDisplayBooksListWithValidBooks()
     {
+        // Mock an array of Book objects
+        $books = [
+            new Book(
+                1,
+                'Title',
+                1,
+                'AuthorName1',
+                'https://wikipedia.org',
+                1234567890123,
+                'Summary',
+                1900,
+                1,
+                'Spanish',
+                'https://wikipedia.org',
+                'https://wikipedia.org',
+                0
+            ),
+            new Book(
+                1,
+                'Title',
+                1,
+                'AuthorName2',
+                'https://wikipedia.org',
+                1234567890123,
+                'Summary',
+                1900,
+                1,
+                'Spanish',
+                'https://wikipedia.org',
+                'https://wikipedia.org',
+                0
+            )
+        ];
+
+        // Call the function with the mock books data
+        $output = display_books_list($books);
+
+        // Assert that the output contains expected HTML elements
+        $this->assertStringContainsString('<h3>Title</h3>', $output);
+        $this->assertStringContainsString('<h3>Title</h3>', $output);
+        $this->assertStringContainsString('<a href=\'https://wikipedia.org\' class=\'author\'>AuthorName1</a>', $output);
+        $this->assertStringContainsString('<a href=\'https://wikipedia.org\' class=\'author\'>AuthorName2</a>', $output);
+        // Add more assertions for other HTML elements as needed
+    }
+
+    public function testDisplayBooksListWithNoBooks()
+    {
+        // Mock an empty array
+        $books = [];
+
+        // Expect an exception when there are no books
         $this->expectException(Exception::class);
         $this->expectExceptionMessage("No books found.");
-        display_books_list([]);
+
+        // Call the function with the empty array
+        display_books_list($books);
+    }
+
+    public function testDisplayBooksListWithInvalidBookObject()
+    {
+        // Mock an array with an invalid object (not a Book)
+        $books = [new stdClass()];
+
+        // Expect an exception when an invalid object is encountered
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("Invalid Book object found.");
+
+        // Call the function with the array containing an invalid object
+        display_books_list($books);
     }
 }
