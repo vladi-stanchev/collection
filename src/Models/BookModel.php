@@ -76,7 +76,7 @@ class BookModel
                 $book['book_cover_img_url'] ?? null,
                 $book['book_gr_url'] ?? null,
                 $genres_array ?? null,
-                $book['deleted'] ?? 0
+                $book['book_deleted'] ?? 0
             );
         }
         return $books;
@@ -122,5 +122,17 @@ class BookModel
             throw new Exception("Failed to add a new book: " . $e->getMessage());
         }
         return true;
+    }
+
+    public function deleteBook(int $id): bool
+    {
+        try {
+            $query = $this->db->prepare("UPDATE `Books` SET deleted = 1 WHERE id = :book_id LIMIT 1");
+            $query->bindParam(':book_id', $id);
+            $query->execute();
+            return true;
+        } catch (PDOException $e) {
+            throw new Exception("Failed to delete: " . $e->getMessage());
+        }
     }
 }

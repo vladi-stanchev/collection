@@ -27,6 +27,7 @@ function display_books_list(array $books): string
         } else {
             $output .= "<p class='author'>$book->author_name</p> <br><br>";
         }
+
         // COVER IMG - Conditional rendering of 
         !empty($book->cover_img_url) && $output .= "<img src='$book->cover_img_url' alt='$book->title cover' class='book-cover'>";
 
@@ -51,6 +52,24 @@ function display_books_list(array $books): string
         // LANGUAGE
         !empty($book->lang_name) && $output .= "<p><span class='bold'>Language: </span>$book->lang_name</p>";
 
+        // DELETE/RESTORE BUTTON
+        if ($book->deleted === 0) {
+            $output .=
+                "<form method='post' action='delete_book.php'>
+            <input type='hidden' name='id' value='$book->id'>
+            <input type='hidden' name='title' value='$book->title'>
+            <input type='submit' name='delete' value='Delete Book' class='delete'>
+            </form>
+        ";
+        } else {
+            $output .=
+                "<form method='post' action='restore_book.php'>
+            <input type='hidden' name='id' value='$book->id'>
+            <input type='hidden' name='title' value='$book->title'>
+            <input type='submit' name='restore' value='Restore Book'>
+            </form>
+        ";
+        }
         $output .= "<hr>";
     }
 
