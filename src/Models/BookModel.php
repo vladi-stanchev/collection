@@ -66,23 +66,6 @@ class BookModel
         return $books;
     }
 
-
-
-    public function getAllLanguages(): array
-    {
-        $query = $this->db->prepare("SELECT
-        `Languages`.`id`,
-        `Languages`.`lang_name`
-        FROM `Languages`
-        ");
-
-        $query->execute();
-
-        $languages = $query->fetchAll();
-
-        return $languages;
-    }
-
     public function addNewBook(
         string $title,
         int $author_id,
