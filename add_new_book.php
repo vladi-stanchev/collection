@@ -154,6 +154,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <a href='#'>New Author</a>&emsp;
             <a href='#'>New Language</a>&emsp;
             <a href='#'>New Genre</a>
+            <br><br>
         </div>
     <?php else : ?>
         <!-- Display a success message and hide the form -->
