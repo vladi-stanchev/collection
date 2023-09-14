@@ -70,7 +70,7 @@ function display_books_list(array $books): string
             </form>
         ";
         }
-        $output .= "<hr>";
+        $output .= "<div class='hr'><br>";
     }
 
     return  $output;

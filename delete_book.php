@@ -22,7 +22,7 @@ if (isset($_POST["id"]) && isset($_POST["title"])) {
 
     if ($bookDeletedOK) {
         $success = true;
-        header("refresh:3.14;url=index.php");
+        header("refresh:4;url=index.php");
     }
 } else {
     // REDIRECT TO HOMEPAGE 
@@ -55,26 +55,25 @@ if (isset($_POST["id"]) && isset($_POST["title"])) {
 
 <body>
     <?php if (!$success) : ?>
-
-        <h2>Are you sure you want to delete "<?php echo $_POST["title"] ?>" from your collection?</h2>
+        <h2>Sure you want to delete "<?php echo $_POST["title"] ?>" from your collection?</h2>
 
         <!-- DELETE BUTTON -->
         <form method='post' action='delete_book.php'>
             <input type='hidden' name='id' value='<?php echo $_POST["id"] ?>'>
             <input type='hidden' name='title' value='<?php echo $_POST["title"] ?>'>
-            <input type='submit' name='delete-confirm' value='Yes, delete!' class='delete'>
+            <input type='submit' name='delete-confirm' value='Delete' class='delete'>
         </form>
 
         <!-- CANCEL BUTTON -->
         <form action='index.php'>
-            <input type='submit' name='' value='No, go back!'>
+            <input type='submit' name='' value='No, go back'>
         </form>
 
     <?php else : ?>
 
         <!-- Display a success message  -->
         <div class="success-message flex-center">
-            <h2>"<?php echo $_POST["title"]; ?>" has been deleted.<br>Taking you back Home in 3.14 seconds.</h2>
+            <h2>"<?php echo $_POST["title"]; ?>" has been deleted.<br>Taking you back Home in 4 seconds.</h2>
         </div>
     <?php endif; ?>
 </body>
