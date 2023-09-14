@@ -83,20 +83,6 @@ class BookModel
         return $languages;
     }
 
-    public function getAllAuthors(): array
-    {
-        $query = $this->db->prepare("SELECT
-        `Authors`.`id`,
-        `Authors`.`author_name`
-        FROM `Authors`
-        ");
-
-        $query->execute();
-
-        $authors = $query->fetchAll();
-        return $authors;
-    }
-
     public function addNewBook(
         string $title,
         int $author_id,

@@ -1,11 +1,15 @@
 <?php
 
+use Collection\Models\AuthorModel;
 use Collection\Models\BookModel;
 use Collection\Models\GenreModel;
+use Collection\Models\LanguageModel;
 
 require_once './db_connect.php';
 require_once './Utilities/utils.php';
 require_once 'src/Views/display_genres_checkbox.php';
+require_once 'src/Views/display_authors_select.php';
+require_once 'src/Views/display_languages_select.php';
 require_once 'vendor/autoload.php';
 
 $form_submitted = false;
@@ -13,6 +17,8 @@ $form_valid = false;
 
 $bookModel = new BookModel($db);
 $genreModel = new GenreModel($db);
+$authorModel = new AuthorModel($db);
+$languageModel = new LanguageModel($db);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -81,22 +87,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <span class="error"><?php echo isset($form_errors['title']) ? $form_errors['title'] : ''; ?></span>
                 <br><br>
 
-                <label for="author">Author<span class='red-star'>*</span></label>
-                <select name="author" id="author">
-                    <option value="start" selected disabled hidden>Select an Option</option>
+                <?php
+                $allAuthors = $authorModel->getAllAuthors();
+                echo display_authors_select($allAuthors);
+                ?>
 
-                    <?php
-                    $authors = $bookModel->getAllAuthors();
-
-                    foreach ($authors as $author) {
-                        // Check if $_POST selection and input
-                        $selected = (isset($_POST['author']) && $_POST['author'] == $author['id']) ? 'selected' : '';
-                        echo "<option value='{$author['id']}' $selected>{$author['author_name']}</option>";
-                    }
-                    ?>
-                </select>
                 <span class="error"><?php echo isset($form_errors['author']) ? $form_errors['author'] : ''; ?></span>
-
                 <br><br>
 
                 <label for="isbn">ISBN<span class='red-star'>*</span></label>
@@ -115,20 +111,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <span class="error"><?php echo isset($form_errors['pub_year']) ? $form_errors['pub_year'] : ''; ?></span>
 
                 <br><br>
-                <label for="lang">Language</label>
-                <select name="lang" id="lang">
-                    <option value="" selected disabled hidden>Select an Option</option>
-
-                    <?php
-                    $languages = $bookModel->getAllLanguages();
-
-                    foreach ($languages as $lang) {
-                        $selected = (isset($_POST['lang']) && $_POST['lang'] == $lang['id']) ? 'selected' : '';
-                        echo ("<option value=$lang[id] $selected>$lang[lang_name]</option>");
-                    }
-                    ?>
-
-                </select>
+                <?php
+                $allLanguages = $languageModel->getAllLanguages();
+                echo display_languages_select($allLanguages);
+                ?>
+                <span class="error"><?php echo isset($form_errors['lang']) ? $form_errors['lang'] : ''; ?></span>
                 <br><br>
 
                 <?php

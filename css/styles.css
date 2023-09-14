@@ -83,7 +83,7 @@ input[type='checkbox'] {
 
 /* Style the submit button */
 input[type='submit'] {
-    background-color: #7a6cad;
+    background-color: #495a9d;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -93,7 +93,7 @@ input[type='submit'] {
 
 /* Add hover effect to the submit button */
 input[type='submit']:hover {
-    background-color: #695d98;
+    background-color: #3b497f;
 }
 
 /* CHECKBOX BUTTONS */
@@ -179,5 +179,13 @@ input[type='checkbox']:checked + label {
     .add-book-form {
         max-width: 500px;
         flex-direction: column;
+        gap: 0;
+    }
+}
+
+@media (max-width: 500px) {
+    .add-book-form {
+        width: 100vw;
+        padding: 20px;
     }
 }

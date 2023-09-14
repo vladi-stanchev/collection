@@ -23,13 +23,13 @@ class GenreModel
 
         $query->execute();
 
-        $genres = $query->fetchAll();
+        $genresArray = $query->fetchAll();
 
         // Sort $genres array by genre_name alphabetically
-        usort($genres, function ($a, $b) {
+        usort($genresArray, function ($a, $b) {
             return strcmp($a['genre_name'], $b['genre_name']);
         });
 
-        return $genres;
+        return $genresArray;
     }
 }

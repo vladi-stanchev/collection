@@ -52,17 +52,21 @@ function validation_add_new_book_form($title, $author, $isbn, $pub_year, $cover_
 
     // TITLE (required)
     if (!$title) {
-        $errors['title'] = 'Book Title can\'t be empty.';
+        $errors['title'] = 'Book Title can\'t be empty';
     }
 
     // AUTHOR (required)
-    if (empty($author) || !is_numeric($author)) {
-        $errors['author'] = 'Author is a required field.';
+    if (empty($author)) {
+        $errors['author'] = 'Author is a required field';
+    }
+
+    if (!empty($author) && !is_numeric($author)) {
+        $errors['author'] = "'$author' is an illegal value";
     }
 
     // ISBN (required)
     if (!validate_isbn($isbn)) {
-        $errors['isbn'] = 'Invalid ISBN.';
+        $errors['isbn'] = 'Invalid ISBN';
     }
 
     // PUB YEAR
@@ -71,22 +75,22 @@ function validation_add_new_book_form($title, $author, $isbn, $pub_year, $cover_
     $maxYear = $currentYear;
 
     if (!empty($pub_year) && (!(preg_match("/^\d{4}$/", $pub_year)) || $pub_year < $minYear || $pub_year > $maxYear)) {
-        $errors['pub_year'] = 'Publication Year incorrect format.';
+        $errors['pub_year'] = 'Publication Year incorrect format';
     }
 
     // COVER IMG URL
     if (!empty($cover_img_url) && !validate_url($cover_img_url)) {
-        $errors['cover_img_url'] = 'Invalid URL for cover image.';
+        $errors['cover_img_url'] = 'Invalid URL for cover image';
     }
 
     // GOODREADS URL
     if (!empty($gr_url) && !validate_url($gr_url)) {
-        $errors['gr_url'] = 'Invalid Goodreads URL.';
+        $errors['gr_url'] = 'Invalid Goodreads URL';
     }
 
     // LANG (almost redundant validation)
     if (!empty($lang) && !is_numeric($lang)) {
-        $errors['lang'] = 'Language error. Please try again.';
+        $errors['lang'] = "'$lang' is an illegal value";
     }
 
     return $errors;
