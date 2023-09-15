@@ -56,18 +56,19 @@ if (isset($_POST["id"]) && isset($_POST["title"])) {
 <body>
     <?php if (!$success) : ?>
         <h2>Sure you want to delete "<?php echo $_POST["title"] ?>" from your collection?</h2>
+        <div class="flex-center flex-gap">
+            <!-- DELETE BUTTON -->
+            <form method='post' action='delete_book.php'>
+                <input type='hidden' name='id' value='<?php echo $_POST["id"] ?>'>
+                <input type='hidden' name='title' value='<?php echo $_POST["title"] ?>'>
+                <input type='submit' name='delete-confirm' value='Delete' class='delete'>
+            </form>
 
-        <!-- DELETE BUTTON -->
-        <form method='post' action='delete_book.php'>
-            <input type='hidden' name='id' value='<?php echo $_POST["id"] ?>'>
-            <input type='hidden' name='title' value='<?php echo $_POST["title"] ?>'>
-            <input type='submit' name='delete-confirm' value='Delete' class='delete'>
-        </form>
-
-        <!-- CANCEL BUTTON -->
-        <form action='index.php'>
-            <input type='submit' name='' value='No, go back'>
-        </form>
+            <!-- CANCEL BUTTON -->
+            <form action='index.php'>
+                <input type='submit' name='' value='No, go back'>
+            </form>
+        </div>
 
     <?php else : ?>
 
