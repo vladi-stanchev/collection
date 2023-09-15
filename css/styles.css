@@ -4,26 +4,206 @@
     box-sizing: border-box;
 }
 
+* {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
 body {
-    width: 800px;
+    max-width: 900px;
     margin: 0 auto;
     font-family: 'Bricolage Grotesque', sans-serif;
     font-weight: 200;
 }
 
+h1,
+h2 {
+    text-align: center;
+}
+
 .book-cover {
-    max-width: 200px;
+    max-width: 300px;
     border-radius: 7px;
 }
 
 a {
-    color: cadetblue;
+    color: #495a9d;
+    text-decoration: underline dotted #b8bde2;
+    font-weight: 400;
 }
 
-a.author {
-    text-decoration: none;
+a:hover {
+    text-decoration: underline #b8bde2;
 }
 
 .bold {
     font-weight: 400;
+}
+
+/* Form styling */
+.add-book-form {
+    width: 900px;
+    margin: 20px auto;
+    text-align: center;
+    background-color: #eae7ee;
+    padding: 50px;
+    border-radius: 15px;
+    display: flex;
+    gap: 3rem;
+    flex: 1 1 0px;
+}
+
+.left,
+.right {
+    flex: 1 1 0px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: smaller;
+}
+
+/* Add some spacing between form elements */
+input[type='text'],
+input[type='number'],
+input[type='url'],
+textarea,
+select,
+input[type='checkbox'] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+input[type='checkbox'] {
+    font-weight: 200;
+}
+
+/* Style the submit button */
+input[type='submit'] {
+    background-color: #495a9d;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Add hover effect to the submit button */
+input[type='submit']:hover {
+    background-color: #3b497f;
+}
+
+/* CHECKBOX BUTTONS */
+
+/* Hide the default checkbox */
+input[type='checkbox'] {
+    display: none;
+}
+
+/* Style the custom checkbox container (button) */
+.checkbox-button {
+    display: inline-block;
+    background-color: #ffffff95;
+    color: #444; /* Button text color */
+    padding: 10px 20px; /* Button padding */
+    border: 1px solid #495a9d7a;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 10px;
+    transition: all 0.2s;
+    font-weight: 200;
+}
+
+/* Style the label text inside the button */
+label .checkbox-button {
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+/* Change color when checked */
+input[type='checkbox']:checked + .checkbox-button {
+    background-color: #495a9d;
+    color: #fff;
+}
+
+input[type='checkbox']:checked + label {
+    background-color: blue;
+}
+
+.checkbox-options-container {
+    gap: 3px;
+}
+
+.success-message {
+    max-width: 600px;
+    margin: 0 auto;
+    flex-direction: column;
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.error,
+.red-star {
+    color: rgb(193, 76, 76);
+    font-size: smaller;
+    margin: 0;
+    padding: 0;
+    line-height: 0.2;
+    font-weight: 400;
+    height: 20px;
+}
+
+.genre-tag {
+    font-size: 0.8rem;
+    margin: 0.1rem;
+    padding: 0.2rem 0.5rem;
+    color: #222;
+    background-color: rgba(255, 255, 255, 0);
+    border: 1px solid #495a9d;
+    display: inline-block;
+    border-radius: 5px;
+}
+
+.collection-display {
+    width: 500px;
+    margin: 0 auto;
+}
+
+/* ANIMATIONS */
+.fade-in {
+    opacity: 0;
+    animation: fadeIn 0.5s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@media (max-width: 900px) {
+    .add-book-form {
+        max-width: 500px;
+        flex-direction: column;
+        gap: 0;
+    }
+}
+
+@media (max-width: 500px) {
+    .add-book-form {
+        width: 100vw;
+        padding: 20px;
+    }
 }

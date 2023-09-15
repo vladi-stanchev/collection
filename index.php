@@ -2,10 +2,9 @@
 
 use Collection\Models\BookModel;
 
-$db = new PDO('mysql:host=db; dbname=collection', 'root', 'password');
-$db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+require_once './db_connect.php';
 
-require_once 'src/display_books_list.php';
+require_once 'src/Views/display_books_list.php';
 require_once 'vendor/autoload.php';
 ?>
 
@@ -33,17 +32,19 @@ require_once 'vendor/autoload.php';
 
 <body>
     <h1>My Library</h1>
-    <?php
-    $bookModel = new BookModel($db);
-    $books = $bookModel->getAllBooks();
+    <div class="collection-display">
+        <?php
+        $bookModel = new BookModel($db);
+        $books = $bookModel->getAllBooks();
 
-    try {
-        echo display_books_list($books);
-    } catch (Exception $e) {
-        echo $e->getMessage();
-    }
+        try {
+            echo display_books_list($books);
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
 
-    ?>
+        ?>
+    </div>
 </body>
 
 </html>
