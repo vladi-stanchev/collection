@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $bookAddedOK = $bookModel->addNewBook($newBook);
             if ($bookAddedOK) {
                 $form_submitted = true;
-                header("refresh:3.14;url=index.php");
+                header("refresh:4;url=index.php");
             }
         } catch (Exception $e) {
             echo $e->getMessage();
@@ -159,7 +159,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php else : ?>
         <!-- Display a success message and hide the form -->
         <div class="success-message flex-center">
-            <p><span class='bold'><?php echo $title; ?></span> added successfully.<br>You'll be sent back to your Library in 3.14 seconds.</p>
+            <p><span class='bold'><?php echo $title; ?></span> added successfully.<br>You'll be sent back to your Library in 4 seconds.</p>
             <a href='add_new_book.php'>Add a new one</a>
         </div>
     <?php endif; ?>

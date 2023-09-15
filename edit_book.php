@@ -31,7 +31,15 @@ if ($editableBook) {
     // CANT DO 404
     // 1. show msgfmt_parse_message
     // 2. return to home
-    echo 'NO BOOK ID FOUND IN DB';
+    header("refresh:4;url=index.php");
+    echo "
+    <div class='success-message flex-center'>
+            <h3><span class='bold'>ERROR: BOOK NOT FOUND.</span><br>Sending you back Home in 4 seconds.</h3>
+            <a href='index.php'>Go back Home</a>
+        </div>
+    ";
+
+    exit;
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -80,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // var_dump($bookAddedOK);
             if ($bookEditedOK) {
                 $form_submitted = true;
-                header("refresh:3.14;url=index.php");
+                header("refresh:4;url=index.php");
             }
         } catch (Exception $e) {
             echo $e->getMessage();
@@ -181,7 +189,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php else : ?>
         <!-- Display a success message and hide the form -->
         <div class="success-message flex-center">
-            <p><span class='bold'><?php echo $title; ?></span> added successfully.<br>You'll be sent back to your Library in 3.14 seconds.</p>
+            <p><span class='bold'><?php echo $title; ?></span> edited successfully.<br>You'll be sent back to your Library in 4 seconds.</p>
             <a href='add_new_book.php'>Add a new one</a>
         </div>
     <?php endif; ?>
