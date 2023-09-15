@@ -16,7 +16,7 @@ class displayBooksListTest extends TestCase
     <h3>Title</h3>
     <a href='https://wikipedia.org' class='author'>AuthorName</a> <br><br>
     <img src='https://wikipedia.org' alt='Title cover' class='book-cover'>
-    <p>Summary</p>
+    <h4>Summary</h4><p>Summary</p>
     <p><span class='bold'>Published: </span>1900</p>
     <p><span class='bold'>ISBN: </span><a href='https://wikipedia.org'>1234567890123</a></p>
     <p><span class='bold'>Language: </span>Spanish</p>
@@ -24,19 +24,19 @@ class displayBooksListTest extends TestCase
     ";
 
         $book = [new Book(
-            1,
             'Title',
+            1,
+            1234567890123,
             1,
             'AuthorName',
             'https://wikipedia.org',
-            1234567890123,
             'Summary',
             1900,
             1,
             'Spanish',
             'https://wikipedia.org',
             'https://wikipedia.org',
-            0
+            null
         )];
 
         $actualOutput = display_books_list($book);
@@ -56,34 +56,33 @@ class displayBooksListTest extends TestCase
         // Mock an array of Book objects
         $books = [
             new Book(
-                1,
                 'Title',
+                1,
+                1234567890123,
                 1,
                 'AuthorName1',
                 'https://wikipedia.org',
-                1234567890123,
                 'Summary',
                 1900,
                 1,
                 'Spanish',
                 'https://wikipedia.org',
                 'https://wikipedia.org',
-                0
+                null
             ),
             new Book(
-                1,
                 'Title',
-                1,
+                4,
+                1234567890123,
+                2,
                 'AuthorName2',
                 'https://wikipedia.org',
-                1234567890123,
                 'Summary',
                 1900,
                 1,
-                'Spanish',
+                'German',
                 'https://wikipedia.org',
-                'https://wikipedia.org',
-                0
+                'https://wikipedia.org'
             )
         ];
 
